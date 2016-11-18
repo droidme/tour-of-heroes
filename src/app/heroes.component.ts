@@ -34,4 +34,18 @@ export class HeroesComponent implements OnInit {
     this.router.navigate(['/detail', this.selected.id]);
   }
 
+  add(hero: Hero): void {
+    hero.name = hero.name.trim();
+    if (!hero.name && !hero.id) { return; }
+    this.heroService.create(hero)
+      .then(hero => {
+        console.log('hero created! ' + hero);
+        this.heroes.push(hero);
+        this.selected = null;
+      })
+      .catch((response) => {
+        alert(response.statusText);
+      });
+  }
+
 }
